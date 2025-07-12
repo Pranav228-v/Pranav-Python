@@ -35,7 +35,7 @@ def game():
 
     for i in range(10):
         printBoard(theBoard)
-        print("It's your turn," + turn + ".Move to which place?")
+        print("It's your turn," + turn + ". Move to which place?")
 
         move = input()
 
@@ -43,7 +43,7 @@ def game():
             theBoard[move] = turn
             count += 1
         else:
-            print("That place is already filled.\nMove to which place?")
+            print("That place is already filled. \nMove to which place?")
             continue
 
         #Now we will check if player X or O has won, for every move after 5 moves.
