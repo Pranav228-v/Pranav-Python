@@ -2,7 +2,7 @@ import pygame
 
 #initalize required modules
 pygame.init()
-white = (255, 255, 255)
+white = (160, 150, 70)
 
 #clock
 clock = pygame.time.Clock()
@@ -12,7 +12,7 @@ clock = pygame.time.Clock()
 display_surface = pygame.display.set_mode((500, 500))
 
 #set the pygame window name
-pygame.display.set_caption('Image')
+pygame.display.set_caption('Cat Image')
 
 #creating a surface object, image is drawn on it.
 image = pygame.image.load('Lesson 31/cat.jpg')
