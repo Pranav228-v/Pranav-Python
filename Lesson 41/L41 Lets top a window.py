@@ -19,10 +19,10 @@ def topwin():
 
 #adding top label and button widget to window (Main) window
 L = Label(window, text = "This is Main Window")
-btn = Button(window, text = "Click here to open tope window", command = topwin)
+btn = Button(window, text = "Click here to open top window", command = topwin)
 
 #arranging widgets
 L.pack()
 btn.pack()
 
-window.mainloop
+window.mainloop()
