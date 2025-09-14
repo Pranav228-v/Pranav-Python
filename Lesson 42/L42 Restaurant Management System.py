@@ -34,7 +34,7 @@ class RestaurantOrderManagement:
                   font=("Arial", 20, "bold")).grid(row=0,
                                                    columnspan=3,
                                                    padx=10,
-                                                   pady=10))
+                                                   pady=10)
 
         self.menu_labels = {}  # To store references to menu item labels
         self.menu_quantities = {}  # To store references to quantity entry widgets
@@ -72,7 +72,7 @@ class RestaurantOrderManagement:
         currency_dropdown.current(0) #set default currency
 
         # Update prices when currency changes
-         self.currency_var.trace('w',self.update_menu_prices)
+        self.currency_var.trace('w',self.update_menu_prices)
 
         # Button to place the order
         order_button = ttk.Button(frame,
@@ -95,17 +95,44 @@ class RestaurantOrderManagement:
        canvas.create_image(0, 0, anchor=tk.NW, image=background_image)
        canvas.image = background_image
         
-
     # Method to update the menu prices based on the selected currency
     def update_menu_prices(self, *args):
-        currency = 
+        currency = self.currency_var.get()
         symbol = "₹" if currency == "INR" else "$"
-        
+        rate = self.exchange_rate if currency == "INR" else 1
+        for item, label in self.menu_labels.items():
+            price = self.menu_items[item] * rate
+            label.config(text=f"{item} ({symbol}{price}):")
 
     # Method to place an order
     def place_order(self):
-        
+        total_cost = 0
+        order_summary = "Order Summary:\n"
+        currency = self.currency_var.get()
+        symbol = "₹" if currency == "INR" else "$"
+        rate = self.exchange_rate if currency == "INR" else 1
+        for item, entry in self.menu_quantities.items():
+            quantity = entry.get()
+            if quantity.isdigit():
+                quantity = int(quantity)
+                price = self.menu_items[item] * rate
+                cost = quantity * price
+                total_cost += cost
+                if quantity > 0:
+                    order_summary += f"{item}: {quantity} x {symbol}{price} = {symbol}{cost}\n"
+        if total_cost > 0:
+            order_summary += f"\nTotal Cost: {symbol}{total_cost}"
+            messagebox.showinfo(
+                "Order Placed",
+                order_summary) #show order summary in a message box
+        else:
+            #show error if no items are ordered
+            messagebox.showerror("Error", "Please order at least one item")
 
 
 # Main block to run the app
 if __name__ == "__main__":
+    root = tk.Tk()
+    app = RestaurantOrderManagement(root)
+    root.geometry("800x600") #set the size of the window
+    root.mainloop() #start the GUI loop
